@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\CakeType;
 use DB;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,5 +49,21 @@ class AppServiceProvider extends ServiceProvider
 
             return $res;
         });
+
+        Collection::macro(
+            'paginateAnother',
+            function ($page, $pageSize) {
+                /** @var Collection $this */
+                $total = $this->count();
+                $data = $this->sortByDesc('id')->where('id', '>', ($page - 1) * $pageSize)->where('id', '<=', $page * $pageSize)->all();
+
+                $res = [];
+                $res['data'] = $data;
+                $res['total'] = $total;
+                $res['pageSize'] = $pageSize;
+                $res['currentPage'] = $page;
+                return $res;
+            }
+        );
     }
 }
