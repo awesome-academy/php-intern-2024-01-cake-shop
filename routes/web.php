@@ -31,6 +31,15 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])
 Route::name('cakes.')
     ->prefix('cakes')
     ->group(function () {
+        Route::name('manager')
+            ->middleware(['auth:sanctum', 'employeeAdmin'])
+            ->prefix('manage')
+            ->group(function () {
+                Route::get('/', [CakeController::class, 'adminIndex'])
+                    ->name('.index');
+                Route::get('/{cake}/add-cake', [CakeController::class, 'addCake'])
+                    ->name('.addCake');
+            });
         Route::get('/', [CakeController::class, 'index'])
             ->name('index');
         Route::get('/{cake}', [CakeController::class, 'show'])

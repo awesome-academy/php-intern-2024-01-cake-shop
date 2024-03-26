@@ -69,7 +69,7 @@ const Navbar = ({ auth }) => {
                                 </Dropdown.Trigger>
                                 <Dropdown.Content>
                                     <Link
-                                        href={route('admin.cakes.index')}
+                                        href={route('cakes.manager.index')}
                                         className="nav-link hover:bg-gray-200"
                                     >
                                         {t('CakeAdmin')}
@@ -85,6 +85,27 @@ const Navbar = ({ auth }) => {
                                         className="nav-link hover:bg-gray-200"
                                     >
                                         {t('ListAccount')}
+                                    </Link>
+                                </Dropdown.Content>
+                            </Dropdown>
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                    {roleId == ROLE.EMPLOYEE ? (
+                        <>
+                            <Dropdown className="nav-item">
+                                <Dropdown.Trigger>
+                                    <div className="ml-5 hover:bg-gray-200 py-2 text-xl px-1 hover:cursor-pointer">
+                                        {t('Manage')}
+                                    </div>
+                                </Dropdown.Trigger>
+                                <Dropdown.Content>
+                                    <Link
+                                        href={route('cakes.manager.index')}
+                                        className="nav-link hover:bg-gray-200"
+                                    >
+                                        {t('CakeAdmin')}
                                     </Link>
                                 </Dropdown.Content>
                             </Dropdown>
