@@ -37,8 +37,6 @@ Route::name('cakes.')
             ->group(function () {
                 Route::get('/', [CakeController::class, 'adminIndex'])
                     ->name('.index');
-                Route::get('/{cake}/add-cake', [CakeController::class, 'addCake'])
-                    ->name('.addCake');
             });
         Route::get('/', [CakeController::class, 'index'])
             ->name('index');

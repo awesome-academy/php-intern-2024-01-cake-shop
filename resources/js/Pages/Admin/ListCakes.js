@@ -3,12 +3,26 @@ import Title from '@/Components/Title';
 import { ROLE } from '@/const/role';
 import i18n from '@/i18n';
 import { Link } from '@inertiajs/inertia-react';
-import { Table } from 'antd';
-import React from 'react';
+import { Modal, Table } from 'antd';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import AddCake from '../Cake/AddCake';
 
-const renderAction = (role, id) => {
+const renderAction = (role, id, name) => {
     const [t] = useTranslation();
+    var content = <></>;
+
+    const [openModal, setOpenModal] = useState(false);
+    const showModal = () => {
+        setOpenModal(true);
+    };
+    const handleCancel = () => {
+        setOpenModal(false);
+    };
+    const handelOk = () => {
+        setOpenModal(false);
+        location.pathname = location.pathname;
+    };
     const handleDelete = async (id) => {
         const accept = confirm(t('Confirm continue'));
         if (!accept) return;
@@ -30,7 +44,7 @@ const renderAction = (role, id) => {
         }
     };
     if (role === ROLE.ADMIN) {
-        return (
+        content = (
             <div key={id} style={{ width: 'fit-content', display: 'flex' }}>
                 <Link
                     href={route('cakes.show', {
@@ -50,15 +64,12 @@ const renderAction = (role, id) => {
                 >
                     <span>{t('Edit')}</span>
                 </Link>
-                <Link
-                    as="button"
+                <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
-                    href={route('cakes.manager.addCake', {
-                        cake: id
-                    })}
+                    onClick={showModal}
                 >
                     <span>{t('addNewCake')}</span>
-                </Link>
+                </button>
                 <button
                     onClick={() => {
                         handleDelete(id);
@@ -70,7 +81,7 @@ const renderAction = (role, id) => {
             </div>
         );
     } else if (role === ROLE.EMPLOYEE) {
-        return (
+        content = (
             <div key={id} style={{ width: 'fit-content', display: 'flex' }}>
                 <Link
                     href={route('cakes.show', {
@@ -81,19 +92,40 @@ const renderAction = (role, id) => {
                 >
                     <span>{t('View')}</span>
                 </Link>
-                <Link
-                    as="button"
+                <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
-                    href={route('cakes.manager.addCake', {
-                        cake: id
-                    })}
+                    onClick={showModal}
                 >
                     <span>{t('addNewCake')}</span>
-                </Link>
+                </button>
             </div>
         );
     }
-    return <></>;
+
+    content = (
+        <>
+            {content}
+            <Modal
+                open={openModal}
+                onCancel={handleCancel}
+                footer={<></>}
+                style={{
+                    height: '500px'
+                }}
+            >
+                <div>
+                    <AddCake
+                        id={id}
+                        name={name}
+                        onOk={handelOk}
+                        onCancel={handleCancel}
+                    />
+                </div>
+            </Modal>
+        </>
+    );
+
+    return content;
 };
 
 export default function ListCakes({ cakes, auth }) {
@@ -110,11 +142,13 @@ export default function ListCakes({ cakes, auth }) {
         },
         {
             title: t('Quantity'),
-            dataIndex: 'quantity'
+            dataIndex: 'quantity',
+            width: '10%'
         },
         {
             title: t('Action'),
-            dataIndex: 'action'
+            dataIndex: 'action',
+            width: '25%'
         }
     ];
     const dataSource = [];
@@ -125,7 +159,8 @@ export default function ListCakes({ cakes, auth }) {
             description: e.description,
             action: renderAction(
                 auth.user != null ? auth.user.role_id : ROLE.USER,
-                e.id
+                e.id,
+                e.name
             ),
             quantity: e.amount
         });

@@ -44,9 +44,9 @@ Route::name('cakes.')
                     ->name('store');
                 Route::put('{cake}', [CakeController::class, 'update'])
                     ->name('update');
-                Route::post('cakes/{cake}/add-cake', [CakeController::class, 'addCake'])
+                Route::post('/{cake}/add-cake', [CakeController::class, 'addCake'])
                     ->name('addCake');
-                Route::delete('cakes/{cake}', [CakeController::class, 'destroy'])
+                Route::delete('/{cake}', [CakeController::class, 'destroy'])
                     ->name('destroy');
             });
 
