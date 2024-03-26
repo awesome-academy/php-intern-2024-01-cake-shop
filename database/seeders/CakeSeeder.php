@@ -16,17 +16,17 @@ class CakeSeeder extends Seeder
      */
     public function run()
     {
-        $ingredients = Ingredient::factory(10)->create();
-        CakeType::factory(5)->create();
+        $ingredients = Ingredient::factory(30)->create();
+        CakeType::factory(10)->create();
 
-        Cake::factory(20)
+        Cake::factory(100)
             ->create([
-                'type_id' => rand(1, 5),
+                'type_id' => 1,
             ])
             ->each(function ($cake) use ($ingredients) {
-                $cake->type_id = rand(1, 5);
+                $cake->type_id = rand(1, 10);
                 // Select a random number of ingredients (2-6):
-                $n = rand(2, 6);
+                $n = rand(2, 10);
                 // Randomly choose ingredients, avoiding duplicates:
                 $remainingIngredients = $ingredients->pluck('id')->toArray();
                 $chosenIngredients = [];

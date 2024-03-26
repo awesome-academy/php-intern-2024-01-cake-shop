@@ -127,5 +127,7 @@
     "Pay":"Pay",
     "TotalPay":"Amount to be paid",
     "Info":"Information",
-    "Details":"Details"
+    "Details":"Details",
+    "HomePage":"Home Page",
+    "ViewMore":"More"
 }

@@ -20,7 +20,6 @@ const useNotification = () => {
         const descContent = Array.isArray(desc)
             ? convertArrayToJsx(desc)
             : desc;
-        console.log(Array.isArray(desc));
         api.success({
             message: title,
             description: <div>{descContent}</div>,

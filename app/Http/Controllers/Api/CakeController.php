@@ -25,9 +25,14 @@ class CakeController extends BaseApiController
     {
         $cakes = DB::table('cakes')
             ->leftJoin('cake_types', 'type_id', '=', 'cake_types.id')
-            ->leftJoin('pictures', 'cakes.id', '=', 'pictures.id')
-            ->get(['cakes.*', DB::raw('cake_types.name as type'), DB::raw('pictures.link as img_link')])
-            ->groupBy('type_id')->all();
+            ->leftJoin('pictures', 'pictures.cake_id', '=', 'cakes.id')
+            ->get([
+                'cakes.*',
+                DB::raw('cake_types.name as type'),
+                DB::raw('pictures.id as img_id'),
+            ])
+            ->unique('id')
+            ->groupBy('type_id');
 
         return response()->json($cakes);
     }

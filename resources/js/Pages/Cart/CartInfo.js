@@ -76,7 +76,6 @@ export default function CartInfo({ auth, order }) {
         } catch (e) {
             var errorsMessage = [];
             for (const [key, value] of Object.entries(e.response.data.errors)) {
-                console.log(key, ':::', value);
                 value.forEach((element) => {
                     errorsMessage.push(element);
                 });
