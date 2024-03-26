@@ -37,7 +37,8 @@ Route::name('cakes.')
     ->group(function () {
         Route::get('/', [CakeController::class, 'getAllCakes'])
             ->name('index');
-
+        Route::get('/group', [CakeController::class, 'groupCakeByType'])
+            ->name('groupByType');
         Route::middleware(['admin', 'auth:sanctum'])
             ->group(function () {
                 Route::post('/', [CakeController::class, 'store'])

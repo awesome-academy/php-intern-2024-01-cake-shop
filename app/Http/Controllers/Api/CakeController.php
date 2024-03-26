@@ -15,8 +15,20 @@ class CakeController extends BaseApiController
     public function getAllCakes(Request $request)
     {
         $page = $request->page ?? 1;
-        $cakes = DB::table('cakes')->paginateAnother($page, config('paginate.pageSize.cakes'));
+        $cakes = DB::table('cakes')
+            ->paginateAnother($page, config('paginate.pageSize.cakes'));
 
+
+        return response()->json($cakes);
+    }
+
+    public function groupCakeByType(Request $request)
+    {
+        $cakes = DB::table('cakes')
+            ->leftJoin('cake_types', 'type_id', '=', 'cake_types.id')
+            ->leftJoin('pictures', 'cakes.id', '=', 'pictures.id')
+            ->get(['cakes.*', DB::raw('cake_types.name as type'), DB::raw('pictures.link as img_link')])
+            ->groupBy('type_id')->all();
         return response()->json($cakes);
     }
 
