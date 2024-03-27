@@ -1,7 +1,9 @@
+import { formatCurrencyVN } from '@/Components/FormatCurrency';
 import Label from '@/Components/Label';
 import Navbar from '@/Components/Navbar';
 import { useNotification } from '@/Components/Notification';
 import Title from '@/Components/Title';
+import Authenticated from '@/Layouts/Authenticated';
 import i18n from '@/i18n';
 import { CloseCircleFilled, DeleteFilled } from '@ant-design/icons';
 import { Input, InputNumber, Modal, Table } from 'antd';
@@ -13,7 +15,7 @@ export default function CartInfo({ auth, order }) {
     const [name, setName] = useState('second');
     const [address, setAddress] = useState(order.shipping_address);
     const [phone, setPhone] = useState(order.shipping_phone);
-    const [note, setNote] = useState(order.note);
+    const [note, setNote] = useState(order.note ?? '');
     const [details, setDetails] = useState({});
     const [api, pushNoti] = useNotification();
     const [total, setTotal] = useState(0);
@@ -73,6 +75,7 @@ export default function CartInfo({ auth, order }) {
                 }
             );
             pushNoti(t('Success'), 'order thanh cong');
+            location.pathname = '/';
         } catch (e) {
             var errorsMessage = [];
             for (const [key, value] of Object.entries(e.response.data.errors)) {
@@ -111,10 +114,7 @@ export default function CartInfo({ auth, order }) {
     order.details.map((e) => {
         data.push({
             name: e.cake.name,
-            price: new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(e.cake.price),
+            price: formatCurrencyVN(e.cake.price),
             amount: (
                 <InputNumber
                     min={1}
@@ -143,8 +143,7 @@ export default function CartInfo({ auth, order }) {
         setTotal(tem);
     }, []);
     return (
-        <>
-            <Navbar auth={auth} />
+        <Authenticated auth={auth}>
             <Title name={'Cart'} />
             <div className=" flex flex-col">
                 <div className="flex justify-center space-x-4 w-[80%] m-auto">
@@ -242,13 +241,10 @@ export default function CartInfo({ auth, order }) {
                 <p className="m-auto text-2xl">
                     {t('TotalPay')}
                     <div className="  text-red-500 font-extrabold">
-                        {new Intl.NumberFormat('vi-VN', {
-                            style: 'currency',
-                            currency: 'VND'
-                        }).format(total)}
+                        {formatCurrencyVN(total)}
                     </div>
                 </p>
             </Modal>
-        </>
+        </Authenticated>
     );
 }

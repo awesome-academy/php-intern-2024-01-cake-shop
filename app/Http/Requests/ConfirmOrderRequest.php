@@ -31,7 +31,7 @@ class ConfirmOrderRequest extends FormRequest
                 'json',
                 new DetailOrderRule(),
             ],
-            'note' => 'string',
+            'note' => 'string|nullable',
         ];
     }
 }

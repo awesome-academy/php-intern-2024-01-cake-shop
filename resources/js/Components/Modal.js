@@ -4,11 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 const ModalContext = React.createContext();
 
-function Modal({ onOk, onCancel, children }) {
+function Modal({ onOk = () => {}, onCancel = () => {}, children }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+
     const handleOk = () => {
         onOk();
         setIsModalOpen(false);
@@ -26,7 +24,7 @@ function Modal({ onOk, onCancel, children }) {
     );
 }
 const Trigger = ({ children }) => {
-    const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
+    const { setIsModalOpen } = useContext(ModalContext);
     return (
         <>
             <div onClick={() => setIsModalOpen(true)}>{children}</div>
