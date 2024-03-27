@@ -129,5 +129,6 @@
     "Info":"Information",
     "Details":"Details",
     "HomePage":"Home Page",
-    "ViewMore":"More"
+    "ViewMore":"More",
+    "ConfirmBuy":"Do you want buy {{name}}?"
 }

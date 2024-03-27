@@ -131,5 +131,6 @@
     "Info":"Thông tin",
     "Details":"Các sản phẩm",
     "HomePage":"Trang chủ",
-    "ViewMore":"Xem thêm"
+    "ViewMore":"Xem thêm",
+    "ConfirmBuy":"Bạn có muốn mua sản phẩm {{name}} không?"
 }

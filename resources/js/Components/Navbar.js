@@ -32,7 +32,7 @@ const Navbar = ({ auth }) => {
     };
     return (
         <>
-            <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 flex justify-content-between">
+            <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 flex justify-content-between min-h-fit">
                 <ul className="navbar-nav align-items-center">
                     <li className="nav-item ml-5">
                         <span

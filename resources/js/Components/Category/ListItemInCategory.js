@@ -1,15 +1,36 @@
-import { Card, Image } from 'antd';
+import { Card, Image, Tooltip } from 'antd';
 import React from 'react';
 import img from '@/img/no_image.png';
 import { formatCurrencyVN } from '../FormatCurrency';
 import { Link } from '@inertiajs/inertia-react';
 import { useTranslation } from 'react-i18next';
+import Modal from '../Modal';
+import { useNotification } from '../Notification';
 export default function ListItemInCategory({ items }) {
-    console.log(items);
+    const [api, pushNoti] = useNotification();
     const [t] = useTranslation();
     const data = items.slice(0, 5);
     const categoryName = data[0].type;
     var content = [];
+    const handleAddToCart = async (id, name) => {
+        const data = {
+            cakeId: id,
+            amount: 1
+        };
+        try {
+            const res = await axios.post(route('api.orders.addItem'), data);
+            if (res.data.success) {
+                pushNoti(t('Success'), t('AddToCartSuccess', { name: name }));
+            }
+        } catch (e) {
+            pushNoti(
+                t('Fail'),
+                t('AddToCartFail', { name: name }),
+                <CloseCircleFilled className=" text-red-500" />
+            );
+        }
+    };
+
     data.map((e) => {
         const imgLink = e.img_id
             ? route('api.image.show', {
@@ -18,9 +39,11 @@ export default function ListItemInCategory({ items }) {
             : img;
         content.push(
             <Card
+                key={e.id}
                 hoverable
                 style={{
-                    width: '240px'
+                    width: '240px',
+                    cursor: 'normal'
                 }}
                 cover={
                     <Image
@@ -61,6 +84,22 @@ export default function ListItemInCategory({ items }) {
                     description={
                         <div className=" w-full min-w-[100px] text-lg text-red-500 font-bold text-center">
                             {formatCurrencyVN(e.price)}
+                            <Modal onOk={() => handleAddToCart(e.id, e.name)}>
+                                <Modal.Trigger>
+                                    <Tooltip placement="bottom" title={'buy'}>
+                                        <button>
+                                            <span>
+                                                <i className="fas fa-cart-plus"></i>
+                                            </span>
+                                        </button>
+                                    </Tooltip>
+                                </Modal.Trigger>
+                                <Modal.Content>
+                                    {t('ConfirmBuy', {
+                                        name: e.name
+                                    })}
+                                </Modal.Content>
+                            </Modal>
                         </div>
                     }
                 />

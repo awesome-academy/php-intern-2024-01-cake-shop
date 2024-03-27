@@ -5,7 +5,7 @@ export default function Authenticated({ auth, children }) {
     return (
         <>
             <Navbar auth={auth} />
-            <div className="w-[100%] flex justify-center">
+            <div className=" flex justify-center min-w-fit">
                 <div>{children}</div>
             </div>
         </>
