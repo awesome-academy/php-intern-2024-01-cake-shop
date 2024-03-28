@@ -47,7 +47,7 @@ export default function Login({ status, canResetPassword }) {
                     axios.defaults.headers.Authorization =
                         'Bearer ' + res.data.token;
                 }
-                location.pathname = '/login';
+                location.pathname = '/';
             } catch (e) {
                 setErrors(e.response.data.errors);
             }

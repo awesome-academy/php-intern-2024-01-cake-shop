@@ -70,9 +70,14 @@ Route::name('users.')
     });
 
 Route::name('orders.')
-    ->prefix('order')
+    ->prefix('orders')
     ->middleware(['auth:sanctum', 'lang'])
     ->group(function () {
         Route::get('/', [CartController::class, 'index'])
             ->name('index');
+        Route::middleware(['employeeAdmin'])
+            ->group(function () {
+                Route::get('/admin', [CartController::class, 'adminIndex'])
+                    ->name('adminIndex');
+            });
     });

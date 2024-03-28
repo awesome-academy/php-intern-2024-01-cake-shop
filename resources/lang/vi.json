@@ -132,5 +132,11 @@
     "Details":"Các sản phẩm",
     "HomePage":"Trang chủ",
     "ViewMore":"Xem thêm",
-    "ConfirmBuy":"Bạn có muốn mua sản phẩm {{name}} không?"
+    "ConfirmBuy":"Bạn có muốn mua sản phẩm {{name}} không?",
+    "OrderDetail":"Chi tiết đơn hàng",
+    "ListOrders":"Danh sách đơn hàng",
+    "CustomerName":"Tên khách hàng",
+    "Status":"Trạng thái",
+    "OrderId":"Mã đơn hàng",
+    "CakeName":"Tên bánh"
 }

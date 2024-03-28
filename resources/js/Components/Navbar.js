@@ -113,6 +113,20 @@ const Navbar = ({ auth }) => {
                     ) : (
                         <></>
                     )}
+                    {roleId != ROLE.USER ? (
+                        <>
+                            <li className="nav-item ml-5">
+                                <Link
+                                    href={route('orders.adminIndex')}
+                                    className="nav-link hover:bg-gray-200"
+                                >
+                                    {t('ListOrders')}
+                                </Link>
+                            </li>
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </ul>
                 <div className=" inline-flex">
                     <LanguageSwitcher className=" mx-2 rounded-md border-slate-200 cursor-pointer" />
