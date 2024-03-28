@@ -1,4 +1,6 @@
+import OrderInfo from '@/Components/Cart/OrderInfo';
 import { formatCurrencyVN } from '@/Components/FormatCurrency';
+import Modal from '@/Components/Modal';
 import Title from '@/Components/Title';
 import Authenticated from '@/Layouts/Authenticated';
 import { STATUS } from '@/const/status';
@@ -37,9 +39,33 @@ const RenderStatusTag = ({ type, text }) => {
 const renderAction = (order) => {
     const [t] = useTranslation();
     return (
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">
-            {t('View')}
-        </button>
+        <Modal
+            title={
+                <div className=" capitalize font-bold text-[30px]">
+                    {t('OrderDetail')}
+                </div>
+            }
+            width={800}
+            footer={
+                <>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">
+                        {t('Action')}
+                    </button>
+                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded">
+                        {t('Cancel')}
+                    </button>
+                </>
+            }
+        >
+            <Modal.Trigger>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">
+                    {t('View')}
+                </button>
+            </Modal.Trigger>
+            <Modal.Content>
+                <OrderInfo order={order} />
+            </Modal.Content>
+        </Modal>
     );
 };
 
