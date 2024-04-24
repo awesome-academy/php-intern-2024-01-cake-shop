@@ -23,7 +23,7 @@ ChartJS.register(
     Filler,
     Legend
 );
-export default function RevenueChart() {
+export default function RevenueChart({ picker = 'month' }) {
     const [t] = useTranslation();
     const [dayStart, setDayStart] = useState(dayjs());
     const [dayEnd, setDayEnd] = useState(dayjs());
@@ -31,20 +31,27 @@ export default function RevenueChart() {
     const [labels, setLabels] = useState([]);
 
     const handleLoadData = async () => {
-        const res = await axios.get(route('api.statistical.revenue'), {
-            params: {
-                startMonth: dayStart.month() + 1,
-                startYear: dayStart.year(),
-                endMonth: dayEnd.month() + 1,
-                endYear: dayEnd.year()
+        const res = await axios.get(
+            route('api.statistical.revenue', {
+                picker: picker
+            }),
+            {
+                params: {
+                    startMonth: dayStart.month() + 1,
+                    startYear: dayStart.year(),
+                    endMonth: dayEnd.month() + 1,
+                    endYear: dayEnd.year()
+                }
             }
-        });
+        );
         setDataSource(res.data.totals);
         setLabels(res.data.labels);
     };
+
     useEffect(() => {
         handleLoadData();
     }, [dayEnd, dayStart]);
+
     const options = {
         responsive: true,
         plugins: {
@@ -77,6 +84,7 @@ export default function RevenueChart() {
                         setDayEnd(end);
                         setDayStart(start);
                     }}
+                    picker={picker}
                 />
             </div>
             <Line options={options} data={data} />

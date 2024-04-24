@@ -40,6 +40,8 @@ Route::name('cakes.')
             ->name('index');
         Route::get('/group', [CakeController::class, 'groupCakeByType'])
             ->name('groupByType');
+        Route::get('/{cakeType}', [CakeController::class, 'getCakeByType'])
+            ->name('getCakeByType');
         Route::post('/{cake}/add-cake', [CakeController::class, 'addCake'])
             ->name('addCake');
         Route::post('/{cake}/review', [CakeController::class, 'review'])
@@ -128,6 +130,6 @@ Route::name('statistical.')
     ->group(function () {
         Route::get('/', [RevenueController::class, 'index'])
             ->name('index');
-        Route::get('/revenue', [RevenueController::class, 'getTotalAmountPerMonth'])
+        Route::get('/revenue/{picker}', [RevenueController::class, 'gatewayGetTotalRevenue'])
             ->name('revenue');
     });

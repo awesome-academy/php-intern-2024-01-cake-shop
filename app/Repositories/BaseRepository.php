@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Closure;
+
 interface BaseRepository
 {
     public function find(string $id);
@@ -15,4 +17,6 @@ interface BaseRepository
     public function getAll();
 
     public function paginate(int $pageSize);
+
+    public function where(Closure $condition);
 }

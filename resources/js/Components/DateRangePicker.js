@@ -2,7 +2,12 @@ import { DatePicker } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function DateRangePicker({ dayStart, dayEnd, onChange }) {
+export default function DateRangePicker({
+    dayStart,
+    dayEnd,
+    onChange,
+    picker = 'month'
+}) {
     const [t] = useTranslation();
     const handleChange = (e, type) => {
         if (e <= dayEnd && type === 1) {
@@ -23,7 +28,7 @@ export default function DateRangePicker({ dayStart, dayEnd, onChange }) {
                     onChange={(e) => {
                         handleChange(e, 1);
                     }}
-                    picker="month"
+                    picker={picker}
                     allowClear={false}
                 />
             </span>
@@ -34,7 +39,7 @@ export default function DateRangePicker({ dayStart, dayEnd, onChange }) {
                     onChange={(e) => {
                         handleChange(e, 2);
                     }}
-                    picker="month"
+                    picker={picker}
                     allowClear={false}
                 />
             </span>

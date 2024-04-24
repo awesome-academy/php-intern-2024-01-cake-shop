@@ -158,5 +158,8 @@
     "NoNoti":"Không có thông báo mới",
     "SeenAll":"Xem tất cả",
     "promo?":"Bạn có muốn nhận các ưu đãi tốt nhất không?",
-    "topCake":"Bánh bán chạy nhất"
+    "topCake":"Bánh bán chạy nhất:",
+    "months":"Theo các tháng",
+    "quarters":"Theo các quý",
+    "years":"Theo các năm"
 }

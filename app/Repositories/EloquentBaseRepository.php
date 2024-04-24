@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Closure;
+
 abstract class EloquentBaseRepository implements BaseRepository
 {
     /** @var \Illuminate\Database\Eloquent\Model */
@@ -92,5 +94,10 @@ abstract class EloquentBaseRepository implements BaseRepository
     public function paginate(int $pageSize)
     {
         return $this->model->paginate($pageSize);
+    }
+
+    public function where(Closure $condition)
+    {
+        return $this->model->where($condition);
     }
 }
